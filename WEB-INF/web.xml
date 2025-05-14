@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+
+<web-app>
+  <!-- AddToCartServlet -->
+  <servlet>
+    <servlet-name>AddToCart</servlet-name>
+    <servlet-class>minitienda.AddToCartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddToCart</servlet-name>
+    <url-pattern>/addToCart</url-pattern>
+  </servlet-mapping>
+
+  <!-- ViewCartServlet -->
+  <servlet>
+    <servlet-name>ViewCart</servlet-name>
+    <servlet-class>minitienda.ViewCartServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewCart</servlet-name>
+    <url-pattern>/viewCart</url-pattern>
+  </servlet-mapping>
+
+  <!-- RemoveItemServlet -->
+  <servlet>
+    <servlet-name>RemoveItem</servlet-name>
+    <servlet-class>minitienda.RemoveItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveItem</servlet-name>
+    <url-pattern>/removeItem</url-pattern>
+  </servlet-mapping>
+
+  <!-- CheckoutServlet -->
+  <servlet>
+    <servlet-name>Checkout</servlet-name>
+    <servlet-class>minitienda.CheckoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Checkout</servlet-name>
+    <url-pattern>/checkout</url-pattern>
+  </servlet-mapping>
+</web-app>
