@@ -52,7 +52,7 @@ public class CheckoutServlet extends HttpServlet {
         if (session != null) {
             carrito = (Carrito) session.getAttribute("carrito");
         }
-        //request.setAttribute("total", carrito == null ? 0.0 : carrito.getTotalFormateado());
+        request.setAttribute("total", carrito == null ? 0.0 : carrito.getTotalFormateado());
         // limpiamos el carrito
         if (carrito != null) carrito.clear();
         gotoPage(request,response,"/checkout.jsp");
