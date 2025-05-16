@@ -1,5 +1,7 @@
 package minitienda;
 import minitienda.Carrito;
+import minitienda.Helper;
+
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
@@ -7,54 +9,74 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class CheckoutServlet extends HttpServlet {
+    Pedido pedido = null;
+    Usuario usuario = null;
 
-    Connection con = null;
-
-
-    private void iniciarBD() {
-        try
-        {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println ( "Encontrado el driver de MySQL" );
-        }
-        catch(java.lang.ClassNotFoundException e)
-        {
-            System.out.println("MySQL JDBC Driver no encontrado ... ");
-        }
-        String url = "";
-        String host = "localhost";
-        String database = "minitienda";
-        try
-        {
-            url = "jdbc:mysql://" + host + "/" + database;
-            con = DriverManager.getConnection(url,"root","manu2004");
-            System.out.println("Conexion establecida con " + url + "...");
-        }
-        catch (java.sql.SQLException e)
-        {
-            System.out.println("Conexion NO establecida con " + url);
-        }
-    }
 
     private void gotoPage(HttpServletRequest request, HttpServletResponse response, String adress) throws ServletException, IOException {
 		//Creamos un objeto de la clase RequestDispatcher
 		RequestDispatcher dispatcher = request.getRequestDispatcher(adress);
 		dispatcher.forward(request, response);
-
 	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //iniciamos la base de datos
-        iniciarBD();
+        Helper.iniciarBD();
         HttpSession session = request.getSession(false);
         Carrito carrito = null;
         if (session != null) {
             carrito = (Carrito) session.getAttribute("carrito");
         }
-        request.setAttribute("total", carrito == null ? 0.0 : carrito.getTotalFormateado());
-        // limpiamos el carrito
-        if (carrito != null) carrito.clear();
-        gotoPage(request,response,"/checkout.jsp");
+        if (carrito == null) {
+            request.setAttribute("error", "No hay carrito en la sesion");
+            gotoPage(request, response, "/error.jsp");
+            return;
+        }
+        //recuperar los datos del formulario
+        String email = request.getParameter("email");
+        String contrasena = request.getParameter("contrasena");
+        String tarjeta_tipo = request.getParameter("tarjeta_tipo");
+        String tarjeta_numero = request.getParameter("tarjeta_numero");
+
+
+        boolean esRegistro = Helper.esRegistro(request);
+
+        //boolean esRegistro = tarjeta_tipo != null && !tarjeta_tipo.isBlank() && tarjeta_numero != null && !tarjeta_numero.isBlank();
+
+        //INICIO SESION
+        if(!esRegistro){
+            System.out.println("Inicio de sesion");
+            //validar el usuario
+            usuario = Helper.validarUsuario(email, contrasena);
+            if(usuario != null){
+                //guardar el pedido
+                double total = carrito.getTotal();
+                pedido = Helper.guardarPedido(email, total);
+            }else{
+                request.setAttribute("error", "El usuario no existe");
+                gotoPage(request,response,"/error.jsp");
+            }       
+        }
+
+        //REGISTRO
+        else{
+            System.out.println("Registro");
+            //guardar el usuario
+            if(Helper.registrarUsuario(email, contrasena, tarjeta_tipo, tarjeta_numero)){
+                //guardar el pedido
+                double total = carrito.getTotal();
+                pedido = Helper.guardarPedido(email, total);
+                usuario = new Usuario(email,contrasena,tarjeta_tipo,tarjeta_numero);
+                
+            }else{
+                request.setAttribute("error", "El usuario no está disponible");
+                gotoPage(request,response,"/error.jsp");
+            }
+        }
+        request.setAttribute("pedido", pedido);
+        request.setAttribute("usuario", usuario);
+        Helper.cerrarBD();
+        gotoPage(request,response,"/confirmacion.jsp");
     }
 }

@@ -5,7 +5,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
 
 <web-app>
-  <!-- AddToCartServlet -->
+  <!-- AñadirItemServlet -->
   <servlet>
     <servlet-name>AnhadirItem</servlet-name>
     <servlet-class>minitienda.AnhadirItemServlet</servlet-class> 
@@ -15,7 +15,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     <url-pattern>/AnhadirItem</url-pattern>
   </servlet-mapping>
 
-  <!-- ViewCartServlet -->
+  <!-- VistaCarritoServlet -->
   <servlet>
     <servlet-name>VistaCarrito</servlet-name>
     <servlet-class>minitienda.VistaCarritoServlet</servlet-class>
@@ -25,7 +25,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     <url-pattern>/VistaCarrito</url-pattern> 
   </servlet-mapping>
 
-  <!-- RemoveItemServlet -->
+  <!-- EliminarItemServlet -->
   <servlet>
     <servlet-name>EliminarItem</servlet-name>
     <servlet-class>minitienda.EliminarItemServlet</servlet-class> 
@@ -42,6 +42,6 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
   </servlet>
   <servlet-mapping>
     <servlet-name>Checkout</servlet-name>
-    <url-pattern>/Checkout</url-pattern>
+    <url-pattern>/Confirmacion</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -40,7 +40,7 @@
         </tr>
       </table>
       <p>
-        <a href="Checkout">Pagar</a> |
+        <a href="checkout.jsp">Pagar</a> |
         <a href="index.html">Seguir comprando</a>
       </p>
     </c:otherwise>

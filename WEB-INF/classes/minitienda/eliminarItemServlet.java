@@ -6,6 +6,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 public class EliminarItemServlet extends HttpServlet {
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String titulo = request.getParameter("titulo");
