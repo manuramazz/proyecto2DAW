@@ -24,7 +24,7 @@
     input[type="submit"]:hover { background: #005fa3; }
     .actions { display: flex; justify-content: space-between; align-items: center; }
     .actions p { margin: 1rem 0 0; }
-    #cancelar:link { text-align: center; color: black;}
+    #cancelar{ text-align: center; color: black;}
     #cancelar:visited { text-align: center; color: black;}
   </style>
 </head>
@@ -55,7 +55,7 @@
       </div>
     </form>
 
-    <p id="cancelar" style="text-align:center;"><a href="vistaCarrito.jsp">Cancelar</a></p>
+    <p style="text-align:center;"><a id="cancelar" href="vistaCarrito.jsp">Cancelar</a></p>
   </main>
 
   <script>
