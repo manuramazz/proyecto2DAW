@@ -54,7 +54,7 @@ public class CheckoutServlet extends HttpServlet {
                 double total = carrito.getTotal();
                 pedido = Helper.guardarPedido(email, total);
             }else{
-                request.setAttribute("error", "El usuario no existe");
+                request.setAttribute("error", "El usuario o contraseña no son correctos");
                 gotoPage(request,response,"/error.jsp");
             }       
         }
